@@ -11,15 +11,15 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class Server {
     private final Logger logger;
     private final ServerSettings serverSettings;
-    private final ConcurrentSkipListMap<ServerHandler, String> clientSockets = new ConcurrentSkipListMap<>((Comparator<ServerHandler>) Comparator.comparing((ServerHandler o) -> o.getNickName()));
+    private final ConcurrentSkipListMap<ServerHandler, String> clientSockets = new ConcurrentSkipListMap<>(Comparator.comparing(ServerHandler::getNickName));
 
     public Server(ServerSettings serverSettings, Logger logger) {
         this.serverSettings = serverSettings;
         this.logger = logger;
     }
 
-    public void start() {
-        try (ServerSocket server = new ServerSocket(serverSettings.serverPort)) {
+    protected void start() {
+        try (ServerSocket server = new ServerSocket(serverSettings.getServerPort())) {
             logger.logMsg("Server Started", false);
 
             while (true) {
@@ -33,37 +33,37 @@ public class Server {
         }
     }
 
-    public void sendMessageToAll(String text) {
+    protected void sendMessageToAll(String text) {
         logger.logMsg(text, false);
         Set<ServerHandler> keys = clientSockets.keySet();
         keys.forEach(k -> k.sendMessage(text));
     }
 
-    public String listAllUsers() {
+    private String listAllUsers() {
         Collection<String> users = clientSockets.values();
         return users.toString();
     }
 
-    public void procedureAddUser(ServerHandler serverHandler, String nickname) {
+    protected void procedureAddUser(ServerHandler serverHandler, String nickname) {
         addUserSocket(serverHandler, nickname);
         sendMessageToAll("[CHAT] User '" + nickname + "' joined. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
     }
 
-    public void procedureDeleteUser(ServerHandler serverHandler) {
+    protected void procedureDeleteUser(ServerHandler serverHandler) {
         deleteUserSocket(serverHandler);
         String nickname = serverHandler.getNickName();
         sendMessageToAll("[CHAT] User '" + nickname + "' left. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
     }
 
-    public void addUserSocket(ServerHandler serverHandler, String nickname) {
+    private void addUserSocket(ServerHandler serverHandler, String nickname) {
         clientSockets.put(serverHandler, nickname);
     }
 
-    public void deleteUserSocket(ServerHandler serverHandler) {
+    private void deleteUserSocket(ServerHandler serverHandler) {
         clientSockets.remove(serverHandler);
     }
 
-    public int getNumberOfClients() {
+    private int getNumberOfClients() {
         return clientSockets.size();
     }
 }

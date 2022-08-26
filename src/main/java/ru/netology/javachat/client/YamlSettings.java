@@ -6,7 +6,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import java.io.File;
 import java.io.IOException;
 
-public class YAMLSettings {
+public class YamlSettings {
     public static ClientSettings readConfigFile(String fileName) {
         ObjectMapper mapper = new YAMLMapper();
         try {

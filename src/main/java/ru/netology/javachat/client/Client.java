@@ -20,7 +20,7 @@ public class Client {
 
     }
 
-    public void start() {
+    protected void start() {
 
         scanner = new Scanner(System.in);
         selectNickname();
@@ -30,8 +30,8 @@ public class Client {
             socketIn = new Scanner(socket.getInputStream());
             socketOut = new PrintWriter(socket.getOutputStream(), true);
             logger.logMsg("Client Started. Socket connection: " + socket, false);
-            logger.logMsg("Enter text for sending or '" + clientSettings.clientExitCommand + "' for finishing.", false);
-            socketOut.println(clientSettings.serverNickNameCommand + nickname);
+            logger.logMsg("Enter text for sending or '" + clientSettings.getClientExitCommand() + "' for finishing.", false);
+            socketOut.println(clientSettings.getServerNickNameCommand() + nickname);
 
             ClientHandler clientHandler = new ClientHandler(socketIn, logger);
             Thread current = new Thread(clientHandler);
@@ -40,7 +40,7 @@ public class Client {
             boolean isFinished = false;
             while (!isFinished) {
                 String userInput = scanner.nextLine();
-                if (clientSettings.clientExitCommand.equals(userInput)) {
+                if (clientSettings.getClientExitCommand().equals(userInput)) {
                     isFinished = true;
 
                 }

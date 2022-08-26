@@ -10,7 +10,7 @@ public class Logger {
     private final String filename;
     private final Boolean append;
     private final String nickname;
-    public final String dataFormat;
+    private final String dataFormat;
 
     public Logger(String filename, Boolean append, String nickname, String dataFormat) {
         this.filename = filename;
@@ -25,7 +25,7 @@ public class Logger {
         saveMsg(text);
     }
 
-    public String addNicknameAndTime(String text, boolean isError) {
+    private String addNicknameAndTime(String text, boolean isError) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dataFormat);
 
         StringBuilder sb = new StringBuilder();
@@ -41,7 +41,7 @@ public class Logger {
                 .append("\n");
         return sb.toString();
     }
-    public void saveMsg(String text) {
+    private void saveMsg(String text) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, append))) {
             bw.write(text);
         } catch (IOException ex) {
@@ -49,7 +49,7 @@ public class Logger {
         }
     }
 
-    public void printMsg(String text, boolean isError) {
+    private void printMsg(String text, boolean isError) {
         if (isError) {
             System.err.println(text);
         } else {

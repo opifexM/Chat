@@ -33,11 +33,11 @@ class ServerHandler implements Runnable {
             while (true) {
                 if (in.hasNext()) {
                     String data = in.nextLine();
-                    if (serverSettings.serverExitCommand.equals(data)) {
+                    if (serverSettings.getServerExitCommand().equals(data)) {
                         server.procedureDeleteUser(this);
                         break;
-                    } else if (data.startsWith(serverSettings.serverNickNameCommand)) {
-                        nickName = data.replace(serverSettings.serverNickNameCommand, "");
+                    } else if (data.startsWith(serverSettings.getServerNickNameCommand())) {
+                        nickName = data.replace(serverSettings.getServerNickNameCommand(), "");
                         server.procedureAddUser(this, nickName);
                     } else {
                         server.sendMessageToAll("[" + nickName + "] " + data);
@@ -56,11 +56,11 @@ class ServerHandler implements Runnable {
         }
     }
 
-    public void sendMessage(String text) {
+    protected void sendMessage(String text) {
         out.println(text);
     }
 
-    public String getNickName() {
+    protected String getNickName() {
         return nickName;
     }
 }

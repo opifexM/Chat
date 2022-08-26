@@ -216,3 +216,10 @@
 [CLIENT] [2022-08-26 12:18:46]: Enter text for sending or '/exit' for finishing.
 [SERVER] [2022-08-26 12:18:46]: [CHAT] User 'dd' joined. Total users: 1. Nicknames: [dd]
 [CLIENT] [2022-08-26 12:18:46]: [CHAT] User 'dd' joined. Total users: 1. Nicknames: [dd]
+[SERVER] [2022-08-26 17:00:25]: Server Started
+[CLIENT] [2022-08-26 17:00:28]: Enter the nickname (max 10 symbols): 
+[SERVER] [2022-08-26 17:00:30]: New socket: Socket[addr=/127.0.0.1,port=52375,localport=9999]
+[CLIENT] [2022-08-26 17:00:30]: Client Started. Socket connection: Socket[addr=localhost/127.0.0.1,port=9999,localport=52375]
+[CLIENT] [2022-08-26 17:00:30]: Enter text for sending or '/exit' for finishing.
+[SERVER] [2022-08-26 17:00:30]: [CHAT] User 'vvv' joined. Total users: 1. Nicknames: [vvv]
+[CLIENT] [2022-08-26 17:00:30]: [CHAT] User 'vvv' joined. Total users: 1. Nicknames: [vvv]
