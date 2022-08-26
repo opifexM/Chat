@@ -1,6 +1,6 @@
-package Client;
+package ru.netology.javachat.client;
 
-public class ClientSettings implements Settings {
+public class ClientSettings {
     public String serverHost;
     public int serverPort;
     public String clientLogFileName;

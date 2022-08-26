@@ -1,4 +1,4 @@
-package Client;
+package ru.netology.javachat.client;
 
 
 public class Main {
@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         ClientSettings clientSettings = YAMLSettings.readConfigFile(SETTINGS_FILE);
-        Logger logger = new Logger(clientSettings);
+        Logger logger = new Logger(clientSettings.clientLogFileName, clientSettings.clientLogFileAppend, clientSettings.clientLogNickname, clientSettings.clientLogDataFormat);
         Client client = new Client(clientSettings, logger);
         client.start();
     }

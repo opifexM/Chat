@@ -200,3 +200,19 @@
 [CLIENT] [2022-08-25 22:08:38]: Enter text for sending or '/exit' for finishing.
 [SERVER] [2022-08-25 22:08:38]: [CHAT] User 'sss' joined. Total users: 1. Nicknames: [sss]
 [CLIENT] [2022-08-25 22:08:38]: [CHAT] User 'sss' joined. Total users: 1. Nicknames: [sss]
+[SERVER] [2022-08-26 11:52:04]: Server Started
+[CLIENT] [2022-08-26 11:52:08]: Enter the nickname (max 10 symbols): 
+[CLIENT] [2022-08-26 11:52:09]: Client Started. Socket connection: Socket[addr=localhost/127.0.0.1,port=9999,localport=63056]
+[SERVER] [2022-08-26 11:52:09]: New socket: Socket[addr=/127.0.0.1,port=63056,localport=9999]
+[CLIENT] [2022-08-26 11:52:09]: Enter text for sending or '/exit' for finishing.
+[SERVER] [2022-08-26 11:52:09]: [CHAT] User '5' joined. Total users: 1. Nicknames: [5]
+[CLIENT] [2022-08-26 11:52:09]: [CHAT] User '5' joined. Total users: 1. Nicknames: [5]
+[CLIENT] [2022-08-26 12:18:28]: Enter the nickname (max 10 symbols): 
+[ERROR] [CLIENT] [2022-08-26 12:18:31]: Creation of socket is failed! Host: localhost, Port: 9999
+[SERVER] [2022-08-26 12:18:39]: Server Started
+[CLIENT] [2022-08-26 12:18:45]: Enter the nickname (max 10 symbols): 
+[SERVER] [2022-08-26 12:18:46]: New socket: Socket[addr=/127.0.0.1,port=63625,localport=9999]
+[CLIENT] [2022-08-26 12:18:46]: Client Started. Socket connection: Socket[addr=localhost/127.0.0.1,port=9999,localport=63625]
+[CLIENT] [2022-08-26 12:18:46]: Enter text for sending or '/exit' for finishing.
+[SERVER] [2022-08-26 12:18:46]: [CHAT] User 'dd' joined. Total users: 1. Nicknames: [dd]
+[CLIENT] [2022-08-26 12:18:46]: [CHAT] User 'dd' joined. Total users: 1. Nicknames: [dd]

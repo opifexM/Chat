@@ -1,4 +1,4 @@
-package Server;
+package ru.netology.javachat.server;
 
 public class ServerSettings {
     public int serverPort;

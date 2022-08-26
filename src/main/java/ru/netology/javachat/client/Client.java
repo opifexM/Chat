@@ -1,4 +1,4 @@
-package Client;
+package ru.netology.javachat.client;
 
 import java.io.IOException;
 import java.io.PrintWriter;

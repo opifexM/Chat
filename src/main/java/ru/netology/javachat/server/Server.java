@@ -1,4 +1,4 @@
-package Server;
+package ru.netology.javachat.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class Server {
     private final Logger logger;
     private final ServerSettings serverSettings;
-    private final ConcurrentSkipListMap<SocketHandler, String> clientSockets = new ConcurrentSkipListMap<>((Comparator<SocketHandler>) Comparator.comparing((SocketHandler o) -> o.getNickName()));
+    private final ConcurrentSkipListMap<ServerHandler, String> clientSockets = new ConcurrentSkipListMap<>((Comparator<ServerHandler>) Comparator.comparing((ServerHandler o) -> o.getNickName()));
 
     public Server(ServerSettings serverSettings, Logger logger) {
         this.serverSettings = serverSettings;
@@ -24,8 +24,8 @@ public class Server {
 
             while (true) {
                 Socket socket = server.accept();
-                SocketHandler socketHandler = new SocketHandler(this, socket, logger, serverSettings);
-                new Thread(socketHandler).start();
+                ServerHandler serverHandler = new ServerHandler(this, socket, logger, serverSettings);
+                new Thread(serverHandler).start();
                 logger.logMsg("New socket: " + socket, false);
             }
         } catch (IOException e) {
@@ -35,7 +35,7 @@ public class Server {
 
     public void sendMessageToAll(String text) {
         logger.logMsg(text, false);
-        Set<SocketHandler> keys = clientSockets.keySet();
+        Set<ServerHandler> keys = clientSockets.keySet();
         keys.forEach(k -> k.sendMessage(text));
     }
 
@@ -44,23 +44,23 @@ public class Server {
         return users.toString();
     }
 
-    public void procedureAddUser(SocketHandler socketHandler, String nickname) {
-        addUserSocket(socketHandler, nickname);
+    public void procedureAddUser(ServerHandler serverHandler, String nickname) {
+        addUserSocket(serverHandler, nickname);
         sendMessageToAll("[CHAT] User '" + nickname + "' joined. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
     }
 
-    public void procedureDeleteUser(SocketHandler socketHandler) {
-        deleteUserSocket(socketHandler);
-        String nickname = socketHandler.getNickName();
+    public void procedureDeleteUser(ServerHandler serverHandler) {
+        deleteUserSocket(serverHandler);
+        String nickname = serverHandler.getNickName();
         sendMessageToAll("[CHAT] User '" + nickname + "' left. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
     }
 
-    public void addUserSocket(SocketHandler socketHandler, String nickname) {
-        clientSockets.put(socketHandler, nickname);
+    public void addUserSocket(ServerHandler serverHandler, String nickname) {
+        clientSockets.put(serverHandler, nickname);
     }
 
-    public void deleteUserSocket(SocketHandler socketHandler) {
-        clientSockets.remove(socketHandler);
+    public void deleteUserSocket(ServerHandler serverHandler) {
+        clientSockets.remove(serverHandler);
     }
 
     public int getNumberOfClients() {

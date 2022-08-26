@@ -1,4 +1,4 @@
-package Client;
+package ru.netology.javachat.server;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -10,14 +10,13 @@ public class Logger {
     private final String filename;
     private final Boolean append;
     private final String nickname;
-    public final String DATA_FORMAT;
+    public final String dataFormat;
 
-
-    public Logger(ClientSettings clientSettings) {
-        this.filename = clientSettings.clientLogFileName;
-        this.append = clientSettings.clientLogFileAppend;
-        this.nickname = clientSettings.clientLogNickname;
-        DATA_FORMAT = clientSettings.clientLogDataFormat;
+    public Logger(String filename, Boolean append, String nickname, String dataFormat) {
+        this.filename = filename;
+        this.append = append;
+        this.nickname = nickname;
+        this.dataFormat = dataFormat;
     }
 
     public void logMsg(String text, boolean isError) {
@@ -27,7 +26,7 @@ public class Logger {
     }
 
     public String addNicknameAndTime(String text, boolean isError) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATA_FORMAT);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dataFormat);
 
         StringBuilder sb = new StringBuilder();
         if (isError) {
@@ -42,12 +41,11 @@ public class Logger {
                 .append("\n");
         return sb.toString();
     }
-
     public void saveMsg(String text) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, append))) {
             bw.write(text);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
     }
 

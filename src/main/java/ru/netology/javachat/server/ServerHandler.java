@@ -1,4 +1,4 @@
-package Server;
+package ru.netology.javachat.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-class SocketHandler implements Runnable {
+class ServerHandler implements Runnable {
     private final Logger logger;
     private final ServerSettings serverSettings;
 
@@ -17,7 +17,7 @@ class SocketHandler implements Runnable {
 
     private String nickName;
 
-    public SocketHandler(Server server, Socket socket, Logger logger, ServerSettings serverSettings) throws IOException {
+    public ServerHandler(Server server, Socket socket, Logger logger, ServerSettings serverSettings) throws IOException {
         this.server = server;
         this.socket = socket;
         this.logger = logger;
