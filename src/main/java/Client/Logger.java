@@ -42,6 +42,7 @@ public class Logger {
                 .append("\n");
         return sb.toString();
     }
+
     public void saveMsg(String text) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, append))) {
             bw.write(text);

@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class Server {
@@ -28,7 +27,6 @@ public class Server {
                 SocketHandler socketHandler = new SocketHandler(this, socket, logger, serverSettings);
                 new Thread(socketHandler).start();
                 logger.logMsg("New socket: " + socket, false);
-                //procedureAddUser(socketHandler);
             }
         } catch (IOException e) {
             logger.logMsg("Server can't start. Reason: " + e.getMessage(), true);
@@ -45,15 +43,16 @@ public class Server {
         Collection<String> users = clientSockets.values();
         return users.toString();
     }
+
     public void procedureAddUser(SocketHandler socketHandler, String nickname) {
         addUserSocket(socketHandler, nickname);
-        sendMessageToAll("[CHAT] User '"+nickname+"' joined. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
+        sendMessageToAll("[CHAT] User '" + nickname + "' joined. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
     }
 
     public void procedureDeleteUser(SocketHandler socketHandler) {
         deleteUserSocket(socketHandler);
         String nickname = socketHandler.getNickName();
-        sendMessageToAll("[CHAT] User '"+nickname+"' left. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
+        sendMessageToAll("[CHAT] User '" + nickname + "' left. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
     }
 
     public void addUserSocket(SocketHandler socketHandler, String nickname) {
