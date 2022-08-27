@@ -1,4 +1,7 @@
-package ru.netology.javachat.server;
+package com.netology.javachat.server;
+
+import com.netology.javachat.utils.ConfigSettings;
+import com.netology.javachat.utils.Logger;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,7 +11,7 @@ import java.util.Scanner;
 
 class ServerHandler implements Runnable {
     private final Logger logger;
-    private final ServerSettings serverSettings;
+    private final ConfigSettings configSettings;
 
     private final Server server;
     private final Socket socket;
@@ -17,11 +20,11 @@ class ServerHandler implements Runnable {
 
     private String nickName;
 
-    public ServerHandler(Server server, Socket socket, Logger logger, ServerSettings serverSettings) throws IOException {
+    public ServerHandler(Server server, Socket socket, Logger logger, ConfigSettings configSettings) throws IOException {
         this.server = server;
         this.socket = socket;
         this.logger = logger;
-        this.serverSettings = serverSettings;
+        this.configSettings = configSettings;
 
         in = new Scanner(socket.getInputStream());
         out = new PrintWriter(socket.getOutputStream(), true);
@@ -33,11 +36,11 @@ class ServerHandler implements Runnable {
             while (true) {
                 if (in.hasNext()) {
                     String data = in.nextLine();
-                    if (serverSettings.getServerExitCommand().equals(data)) {
+                    if (configSettings.getServerCommandExit().equals(data)) {
                         server.procedureDeleteUser(this);
                         break;
-                    } else if (data.startsWith(serverSettings.getServerNickNameCommand())) {
-                        nickName = data.replace(serverSettings.getServerNickNameCommand(), "");
+                    } else if (data.startsWith(configSettings.getServerCommandChangeNickname())) {
+                        nickName = data.replace(configSettings.getServerCommandChangeNickname(), "");
                         server.procedureAddUser(this, nickName);
                     } else {
                         server.sendMessageToAll("[" + nickName + "] " + data);

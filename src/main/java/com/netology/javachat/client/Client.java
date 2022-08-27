@@ -1,4 +1,7 @@
-package ru.netology.javachat.client;
+package com.netology.javachat.client;
+
+import com.netology.javachat.utils.ConfigSettings;
+import com.netology.javachat.utils.Logger;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,15 +10,15 @@ import java.util.Scanner;
 
 public class Client {
     private final Logger logger;
-    private final ClientSettings clientSettings;
+    private final ConfigSettings configSettings;
     private String nickname;
     private Socket socket;
     private Scanner scanner;
     private Scanner socketIn;
     private PrintWriter socketOut;
 
-    public Client(ClientSettings clientSettings, Logger logger) {
-        this.clientSettings = clientSettings;
+    public Client(ConfigSettings configSettings, Logger logger) {
+        this.configSettings = configSettings;
         this.logger = logger;
 
     }
@@ -26,12 +29,13 @@ public class Client {
         selectNickname();
 
         try {
-            socket = new Socket(clientSettings.serverHost, clientSettings.serverPort);
+            socket = new Socket(configSettings.getServerHost(), configSettings.getServerPort());
             socketIn = new Scanner(socket.getInputStream());
             socketOut = new PrintWriter(socket.getOutputStream(), true);
             logger.logMsg("Client Started. Socket connection: " + socket, false);
-            logger.logMsg("Enter text for sending or '" + clientSettings.getClientExitCommand() + "' for finishing.", false);
-            socketOut.println(clientSettings.getServerNickNameCommand() + nickname);
+            logger.logMsg("Enter text for sending or '" + configSettings.getServerCommandExit()
+                    + "' for finishing.", false);
+            socketOut.println(configSettings.getServerCommandChangeNickname() + nickname);
 
             ClientHandler clientHandler = new ClientHandler(socketIn, logger);
             Thread current = new Thread(clientHandler);
@@ -40,7 +44,7 @@ public class Client {
             boolean isFinished = false;
             while (!isFinished) {
                 String userInput = scanner.nextLine();
-                if (clientSettings.getClientExitCommand().equals(userInput)) {
+                if (configSettings.getServerCommandExit().equals(userInput)) {
                     isFinished = true;
 
                 }
@@ -52,7 +56,8 @@ public class Client {
             socket.close();
 
         } catch (IOException e) {
-            logger.logMsg("Creation of socket is failed! Host: " + clientSettings.serverHost + ", Port: " + clientSettings.serverPort, true);
+            logger.logMsg("Creation of socket is failed! Host: "
+                    + configSettings.getServerHost() + ", Port: " + configSettings.getServerPort(), true);
         }
     }
 

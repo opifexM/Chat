@@ -1,9 +1,0 @@
----
-serverHost: localhost
-serverPort: 9999
-clientLogFileName: "file.log"
-clientLogFileAppend: true
-clientLogDataFormat: "yyyy-MM-dd HH:mm:ss"
-clientLogNickname: "CLIENT"
-clientExitCommand: "/exit"
-serverNickNameCommand: $$$nickname$$$

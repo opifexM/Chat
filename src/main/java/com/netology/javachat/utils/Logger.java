@@ -1,4 +1,4 @@
-package ru.netology.javachat.client;
+package com.netology.javachat.utils;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -8,17 +8,15 @@ import java.time.format.DateTimeFormatter;
 
 public class Logger {
     private final String filename;
-    private final Boolean append;
     private final String nickname;
-    private final String dataFormat;
+    DateTimeFormatter dateTimeFormatter;
+    FileWriter fileWriter;
 
-    public Logger(String filename, Boolean append, String nickname, String dataFormat) {
+    public Logger(String filename, String nickname, String dataFormat) {
         this.filename = filename;
-        this.append = append;
         this.nickname = nickname;
-        this.dataFormat = dataFormat;
+        dateTimeFormatter = DateTimeFormatter.ofPattern(dataFormat);
     }
-
 
     public void logMsg(String text, boolean isError) {
         text = addNicknameAndTime(text, isError);
@@ -27,24 +25,19 @@ public class Logger {
     }
 
     private String addNicknameAndTime(String text, boolean isError) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dataFormat);
-
-        StringBuilder sb = new StringBuilder();
-        if (isError) {
-            sb.append("[ERROR] ");
-        }
-        sb.append("[")
-                .append(nickname)
-                .append("] [")
-                .append(dtf.format(LocalDateTime.now()))
-                .append("]: ")
-                .append(text)
-                .append("\n");
-        return sb.toString();
+        return (isError ? "[ERROR] " : "")
+                + String.format("[%s] [%s]: %s%n", nickname, dateTimeFormatter.format(LocalDateTime.now()), text);
     }
 
     private void saveMsg(String text) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, append))) {
+        if (fileWriter == null) {
+            try {
+                fileWriter = new FileWriter(filename, true);
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        try (BufferedWriter bw = new BufferedWriter(fileWriter)) {
             bw.write(text);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());

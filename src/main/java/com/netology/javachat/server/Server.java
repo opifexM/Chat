@@ -1,4 +1,7 @@
-package ru.netology.javachat.server;
+package com.netology.javachat.server;
+
+import com.netology.javachat.utils.ConfigSettings;
+import com.netology.javachat.utils.Logger;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,21 +13,21 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 public class Server {
     private final Logger logger;
-    private final ServerSettings serverSettings;
+    private final ConfigSettings configSettings;
     private final ConcurrentSkipListMap<ServerHandler, String> clientSockets = new ConcurrentSkipListMap<>(Comparator.comparing(ServerHandler::getNickName));
 
-    public Server(ServerSettings serverSettings, Logger logger) {
-        this.serverSettings = serverSettings;
+    public Server(ConfigSettings configSettings, Logger logger) {
+        this.configSettings = configSettings;
         this.logger = logger;
     }
 
     protected void start() {
-        try (ServerSocket server = new ServerSocket(serverSettings.getServerPort())) {
+        try (ServerSocket server = new ServerSocket(configSettings.getServerPort())) {
             logger.logMsg("Server Started", false);
 
             while (true) {
                 Socket socket = server.accept();
-                ServerHandler serverHandler = new ServerHandler(this, socket, logger, serverSettings);
+                ServerHandler serverHandler = new ServerHandler(this, socket, logger, configSettings);
                 new Thread(serverHandler).start();
                 logger.logMsg("New socket: " + socket, false);
             }

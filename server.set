@@ -1,8 +1,0 @@
----
-serverPort: 9999
-serverLogFileName: "file.log"
-serverLogFileAppend: true
-serverLogDataFormat: "yyyy-MM-dd HH:mm:ss"
-serverLogNickname: "SERVER"
-serverExitCommand: "/exit"
-serverNickNameCommand: $$$nickname$$$

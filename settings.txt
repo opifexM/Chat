@@ -1,0 +1,11 @@
+---
+serverHost: localhost
+serverPort: 9999
+serverLogFileName: "serverFile.log"
+clientLogFileName: "clientFile.log"
+serverLogDataFormat: "yyyy-MM-dd HH:mm:ss"
+clientLogDataFormat: "yyyy-MM-dd HH:mm:ss"
+serverLogNickname: "SERVER"
+clientLogNickname: "CLIENT"
+serverCommandChangeNickname: $$$nickname$$$
+serverCommandExit: "/exit"

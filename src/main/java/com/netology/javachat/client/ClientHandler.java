@@ -1,4 +1,6 @@
-package ru.netology.javachat.client;
+package com.netology.javachat.client;
+
+import com.netology.javachat.utils.Logger;
 
 import java.util.Scanner;
 
