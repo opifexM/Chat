@@ -12,10 +12,7 @@ public class Client {
     private final Logger logger;
     private final ConfigSettings configSettings;
     private String nickname;
-    private Socket socket;
     private Scanner scanner;
-    private Scanner socketIn;
-    private PrintWriter socketOut;
 
     public Client(ConfigSettings configSettings, Logger logger) {
         this.configSettings = configSettings;
@@ -28,10 +25,9 @@ public class Client {
         scanner = new Scanner(System.in);
         selectNickname();
 
-        try {
-            socket = new Socket(configSettings.getServerHost(), configSettings.getServerPort());
-            socketIn = new Scanner(socket.getInputStream());
-            socketOut = new PrintWriter(socket.getOutputStream(), true);
+        try (Socket socket = new Socket(configSettings.getServerHost(), configSettings.getServerPort());
+             Scanner socketIn = new Scanner(socket.getInputStream())) {
+            PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true);
             logger.logMsg("Client Started. Socket connection: " + socket, false);
             logger.logMsg("Enter text for sending or '" + configSettings.getServerCommandExit()
                     + "' for finishing.", false);
@@ -53,7 +49,6 @@ public class Client {
 
             logger.logMsg("[CHAT] Disconnected.", false);
             current.interrupt();
-            socket.close();
 
         } catch (IOException e) {
             logger.logMsg("Creation of socket is failed! Host: "

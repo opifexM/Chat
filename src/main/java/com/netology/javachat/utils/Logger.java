@@ -9,13 +9,30 @@ import java.time.format.DateTimeFormatter;
 public class Logger {
     private final String filename;
     private final String nickname;
-    DateTimeFormatter dateTimeFormatter;
-    FileWriter fileWriter;
+    private final DateTimeFormatter dateTimeFormatter;
+    private BufferedWriter bufferedWriter;
 
     public Logger(String filename, String nickname, String dataFormat) {
         this.filename = filename;
         this.nickname = nickname;
         dateTimeFormatter = DateTimeFormatter.ofPattern(dataFormat);
+        initialFile();
+    }
+
+    private void initialFile() {
+        try (FileWriter fileWriter = new FileWriter(filename, true)) {
+            bufferedWriter = new BufferedWriter(fileWriter);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void saveMsg(String text) {
+        try {
+            bufferedWriter.write(text);
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
 
     public void logMsg(String text, boolean isError) {
@@ -27,21 +44,6 @@ public class Logger {
     private String addNicknameAndTime(String text, boolean isError) {
         return (isError ? "[ERROR] " : "")
                 + String.format("[%s] [%s]: %s%n", nickname, dateTimeFormatter.format(LocalDateTime.now()), text);
-    }
-
-    private void saveMsg(String text) {
-        if (fileWriter == null) {
-            try {
-                fileWriter = new FileWriter(filename, true);
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-        try (BufferedWriter bw = new BufferedWriter(fileWriter)) {
-            bw.write(text);
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-        }
     }
 
     private void printMsg(String text, boolean isError) {

@@ -49,13 +49,15 @@ public class Server {
 
     protected void procedureAddUser(ServerHandler serverHandler, String nickname) {
         addUserSocket(serverHandler, nickname);
-        sendMessageToAll("[CHAT] User '" + nickname + "' joined. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
+        sendMessageToAll("[CHAT] User '" + nickname + "' joined. Total users: "
+                + getNumberOfClients() + ". Nicknames: " + listAllUsers());
     }
 
     protected void procedureDeleteUser(ServerHandler serverHandler) {
         deleteUserSocket(serverHandler);
         String nickname = serverHandler.getNickName();
-        sendMessageToAll("[CHAT] User '" + nickname + "' left. Total users: " + getNumberOfClients() + ". Nicknames: " + listAllUsers());
+        sendMessageToAll("[CHAT] User '" + nickname + "' left. Total users: "
+                + getNumberOfClients() + ". Nicknames: " + listAllUsers());
     }
 
     private void addUserSocket(ServerHandler serverHandler, String nickname) {
