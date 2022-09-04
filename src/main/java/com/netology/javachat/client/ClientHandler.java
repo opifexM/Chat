@@ -19,7 +19,7 @@ public class ClientHandler implements Runnable {
         while (!current.isInterrupted()) {
             if (socketIn.hasNext()) {
                 String serverAnswer = socketIn.nextLine();
-                logger.logMsg(serverAnswer, false);
+                logger.logMessage(serverAnswer, false);
             }
         }
     }

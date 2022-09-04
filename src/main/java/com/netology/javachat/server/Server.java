@@ -23,21 +23,21 @@ public class Server {
 
     protected void start() {
         try (ServerSocket server = new ServerSocket(configSettings.getServerPort())) {
-            logger.logMsg("Server Started", false);
+            logger.logMessage("Server Started", false);
 
             while (true) {
                 Socket socket = server.accept();
                 ServerHandler serverHandler = new ServerHandler(this, socket, logger, configSettings);
                 new Thread(serverHandler).start();
-                logger.logMsg("New socket: " + socket, false);
+                logger.logMessage("New socket: " + socket, false);
             }
         } catch (IOException e) {
-            logger.logMsg("Server can't start. Reason: " + e.getMessage(), true);
+            logger.logMessage("Server can't start. Reason: " + e.getMessage(), true);
         }
     }
 
     protected void sendMessageToAll(String text) {
-        logger.logMsg(text, false);
+        logger.logMessage(text, false);
         Set<ServerHandler> keys = clientSockets.keySet();
         keys.forEach(k -> k.sendMessage(text));
     }

@@ -28,8 +28,8 @@ public class Client {
         try (Socket socket = new Socket(configSettings.getServerHost(), configSettings.getServerPort());
              Scanner socketIn = new Scanner(socket.getInputStream())) {
             PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true);
-            logger.logMsg("Client Started. Socket connection: " + socket, false);
-            logger.logMsg("Enter text for sending or '" + configSettings.getServerCommandExit()
+            logger.logMessage("Client Started. Socket connection: " + socket, false);
+            logger.logMessage("Enter text for sending or '" + configSettings.getServerCommandExit()
                     + "' for finishing.", false);
             socketOut.println(configSettings.getServerCommandChangeNickname() + nickname);
 
@@ -47,23 +47,23 @@ public class Client {
                 socketOut.println(userInput);
             }
 
-            logger.logMsg("[CHAT] Disconnected.", false);
+            logger.logMessage("[CHAT] Disconnected.", false);
             current.interrupt();
 
         } catch (IOException e) {
-            logger.logMsg("Creation of socket is failed! Host: "
+            logger.logMessage("Creation of socket is failed! Host: "
                     + configSettings.getServerHost() + ", Port: " + configSettings.getServerPort(), true);
         }
     }
 
     private void selectNickname() {
         while (nickname == null) {
-            logger.logMsg("Enter the nickname (max 10 symbols): ", false);
+            logger.logMessage("Enter the nickname (max 10 symbols): ", false);
             String text = scanner.nextLine();
             if (text.length() > 0 && text.length() < 10) {
                 nickname = text;
             } else {
-                logger.logMsg("Wrong nickname.", true);
+                logger.logMessage("Wrong nickname.", true);
             }
         }
     }

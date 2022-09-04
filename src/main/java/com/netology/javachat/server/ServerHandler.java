@@ -47,14 +47,14 @@ class ServerHandler implements Runnable {
                     }
                 }
             }
-            logger.logMsg("closing socket: " + socket, false);
+            logger.logMessage("closing socket: " + socket, false);
         } catch (NoSuchElementException ex) {
-            logger.logMsg("Connection is finished!", false);
+            logger.logMessage("Connection is finished!", false);
         } finally {
             try {
                 socket.close();
             } catch (IOException e) {
-                logger.logMsg("Socket can't be closed!", false);
+                logger.logMessage("Socket can't be closed!", false);
             }
         }
     }

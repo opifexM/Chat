@@ -27,7 +27,7 @@ public class Logger {
         }
     }
 
-    private void saveMsg(String text) {
+    private void saveMessage(String text) {
         try {
             bufferedWriter.write(text);
         } catch (IOException ex) {
@@ -35,10 +35,10 @@ public class Logger {
         }
     }
 
-    public void logMsg(String text, boolean isError) {
+    public void logMessage(String text, boolean isError) {
         text = addNicknameAndTime(text, isError);
-        printMsg(text, isError);
-        saveMsg(text);
+        printMessage(text, isError);
+        saveMessage(text);
     }
 
     private String addNicknameAndTime(String text, boolean isError) {
@@ -46,7 +46,7 @@ public class Logger {
                 + String.format("[%s] [%s]: %s%n", nickname, dateTimeFormatter.format(LocalDateTime.now()), text);
     }
 
-    private void printMsg(String text, boolean isError) {
+    private void printMessage(String text, boolean isError) {
         if (isError) {
             System.err.println(text);
         } else {
