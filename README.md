@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/7a277b16f121b268cd7e/maintainability)](https://codeclimate.com/github/opifexM/Chat/maintainability)
+
 ## Network chat with multiple client connections
  
 Configuring the client and server in a file: 
